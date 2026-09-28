@@ -1,0 +1,19 @@
+body {
+    background-color: #F3E9D2;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.drinkImage {
+    height: 400px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.card {
+    margin: auto;
+    background-color: #C6DABF;
+}
+
+.btn {
+    font-size: large;
+}

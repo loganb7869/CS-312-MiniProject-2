@@ -1,0 +1,97 @@
+<%- include("../partials/header.ejs") %>
+
+<body>
+    <div class="container">
+
+        <div class="text-center">
+            <h1 class="fw-bold">Random Cocktail Generator</h1>
+            
+            <p class="lead mt-3">By clicking the button below, a random cocktail will be grabbed from the free API, <i>TheCocktailDB</i>.</p>
+        </div>
+
+        <div class="card mx-auto">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <p class="mt-4 fw-bold">The returned information is:</p>
+                        <ul>
+                            <li>a picture of the cocktail</li>
+                            <li>the name of the drink</li>
+                            <li>the category of the drink</li>
+                            <li>whether the drink is alcoholic or not</li>
+                            <li>the glass type to use</li>
+                            <li>the ingredients of the drink</li>
+                            <li>and the steps to make the drink</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-5 d-flex align-items-center justify-content-center">
+                        <form action="/submit" method="POST">
+                            <button type="submit" class="btn btn-secondary btn-lg text-center">Get Random Drink</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- make sure returned variable is defined -->
+    <% if (typeof data !== "undefined") { %>
+        <div class="container mt-5 mb-5">
+
+            <div class="card mx-auto">
+                <div class="card-body">
+
+                    <h1 class="card-title text-center mb-4"><%= data.strDrink %></h1>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h5><u>Category:</u></h5>
+                            <p><%= data.strCategory %></p>
+
+                            <h5><u>Drink Type</u></h5>
+                            <p><%= data.strAlcoholic %></p>
+
+                            <h5><u>Glass Type</u></h5>
+                            <p><%= data.strGlass %></p>
+
+                            <h5><u>Ingredients</u></h5>    
+                            <!-- initialize variables to store ingredients and measurements -->
+                            <% let drinkIngredient = "" %>
+                            <% let drinkMeasurement = "" %>
+
+                            <ul>
+                                <!-- loop through ingredients and measurements -->
+                                <% for (let i = 1; i <= 15; i++) { %>
+                                    <!-- store ingredient and measurement -->
+                                    <% let drinkIngredient = data["strIngredient" + i] %>
+                                    <% let drinkMeasurement = data["strMeasure" + i] %>
+
+                                    <!-- check if ingredient is null to prevent listing of null values -->
+                                    <% if (drinkIngredient != null) { %>
+                                        <li><%= drinkMeasurement %><%= drinkIngredient %></li>
+                                    <% } %>
+                                <% } %>
+                            </ul>
+
+                            <h5><u>Steps:</u></h5>
+                            <p><%= data.strInstructions %></p>
+                        </div>
+
+                        <div class="col-md-5 d-flex align-items-center justify-content-center">
+                            <img src="<%= data.strDrinkThumb %>" class="drinkImage img-fluid mb-3" alt="<%= data.strDrink %>">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <footer>
+        <p class="text-center">Remember to always drink responsibly!</p>
+    </footer>
+</body>
+</html>
